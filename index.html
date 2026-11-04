@@ -1,0 +1,16 @@
+{% extends "base.html" %}{% block content %}
+<h1>Search the archive</h1>
+<form class="filters" method="get">
+  <input name="q" value="{{ q }}" placeholder="Search text, tags or place" aria-label="Search">
+  <select name="category" aria-label="Category"><option value="">Any type</option>
+    {% for c in categories %}<option {{ 'selected' if c==cat }}>{{ c }}</option>{% endfor %}</select>
+  <select name="era" aria-label="Era"><option value="">Any era</option>
+    {% for e in eras %}<option {{ 'selected' if e==era }}>{{ e }}</option>{% endfor %}</select>
+  <button class="btn">Search</button>
+</form>
+{% if not items %}<p class="empty">Nothing matches yet. <a href="{{ url_for('upload') }}">Add a scan, photo or PDF</a> to start the archive.</p>{% endif %}
+<ul class="results">{% for i in items %}
+  <li><a href="{{ url_for('item', item_id=i.id) }}"><h2>{{ i.title }}</h2></a>
+  <p class="meta">{{ i.category }}, {{ i.era }}{% if i.location %}, {{ i.location }}{% endif %}</p>
+  <p>{{ (i.extracted_text or 'No text found in this file.')[:220] }}</p></li>{% endfor %}</ul>
+{% endblock %}

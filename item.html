@@ -1,0 +1,19 @@
+{% extends "base.html" %}{% block title %}{{ item.title }}{% endblock %}{% block content %}
+<h1>{{ item.title }}</h1>
+<div class="split">
+  <section><h2>Original</h2>
+    {% if item.file_type == 'pdf' %}<iframe src="{{ url_for('files', name=item.filename) }}" title="PDF"></iframe>
+    {% else %}<img src="{{ url_for('files', name=item.filename) }}" alt="{{ item.title }}">{% endif %}</section>
+  <section><h2>Extracted text</h2><pre>{{ item.extracted_text or 'No text found in this file.' }}</pre></section>
+</div>
+<h2>Details</h2>
+<form method="post" action="{{ url_for('edit', item_id=item.id) }}" class="stack">
+  <label>Title<input name="title" value="{{ item.title }}"></label>
+  <label>Type<select name="category">{% for c in categories + ['Unclassified'] %}<option {{ 'selected' if c==item.category }}>{{ c }}</option>{% endfor %}</select></label>
+  <label>Era<select name="era">{% for e in eras + ['Unclassified'] %}<option {{ 'selected' if e==item.era }}>{{ e }}</option>{% endfor %}</select></label>
+  <label>Place<input name="location" value="{{ item.location or '' }}"></label>
+  <label>Tags, separated by commas<input name="tags" value="{{ tags|join(', ') }}"></label>
+  <p class="meta">Language detected: {{ item.language }}</p>
+  <button class="btn">Save changes</button>
+</form>
+{% endblock %}

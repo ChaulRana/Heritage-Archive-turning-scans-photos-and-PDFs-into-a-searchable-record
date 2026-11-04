@@ -1,0 +1,11 @@
+CREATE TABLE IF NOT EXISTS items (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  title TEXT, filename TEXT NOT NULL, file_type TEXT, extracted_text TEXT,
+  category TEXT, era TEXT, location TEXT, language TEXT,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE IF NOT EXISTS tags (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE NOT NULL);
+CREATE TABLE IF NOT EXISTS item_tags (
+  item_id INTEGER REFERENCES items(id), tag_id INTEGER REFERENCES tags(id),
+  PRIMARY KEY (item_id, tag_id)
+);

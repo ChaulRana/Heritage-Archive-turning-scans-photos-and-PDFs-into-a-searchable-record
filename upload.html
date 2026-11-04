@@ -1,0 +1,9 @@
+{% extends "base.html" %}{% block content %}
+<h1>Add material</h1>
+<p>Upload scans, photos or PDFs. The app reads the text and suggests a type, era, place and tags, which you can correct afterwards.</p>
+<form method="post" enctype="multipart/form-data" class="stack">
+  <label>Title (optional, used for every file in this upload)<input name="title"></label>
+  <label>Files<input type="file" name="files" multiple required accept=".png,.jpg,.jpeg,.tif,.tiff,.pdf"></label>
+  <button class="btn">Read and add to archive</button>
+</form>
+{% endblock %}
